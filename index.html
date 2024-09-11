@@ -36,6 +36,11 @@
             width: 80%;
             margin: 20px auto;
         }
+        .portfolio-container {
+            max-height: 500px; /* Altura máxima para a rolagem */
+            overflow-y: auto; /* Adiciona barra de rolagem */
+            margin-top: 20px;
+        }
         .portfolio-item {
             background-color: #fff;
             border-radius: 5px;
@@ -43,6 +48,7 @@
             margin-bottom: 20px;
             padding: 20px;
             text-align: center;
+            display: none; /* Projetos ocultos inicialmente, serão exibidos pelo filtro */
         }
         .portfolio-item img {
             max-width: 100%;
@@ -66,9 +72,23 @@
             color: #fff;
             text-align: center;
             padding: 10px;
-            position: fixed;
-            bottom: 0;
+            position: relative;
             width: 100%;
+        }
+        .filter-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #0073e6;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .filter-btn:hover {
+            background-color: #005bb5;
+        }
+        .active {
+            background-color: #005bb5 !important;
         }
     </style>
 </head>
@@ -78,30 +98,68 @@
         <p>Bem-vindo ao meu portfólio! Explore meus projetos.</p>
     </header>
     <nav>
-        <a href="#portfolio">Portfólio</a>
-        <a href="#contato">Contato</a>
+        <button class="filter-btn active" onclick="filterProjects('all')">Todos</button>
+        <button class="filter-btn" onclick="filterProjects('quiz')">Quiz</button>
+        <button class="filter-btn" onclick="filterProjects('andamento')">Em Andamento</button>
     </nav>
     <div class="container">
         <section id="portfolio">
             <h2>Portfólio</h2>
-            <div class="portfolio-item">
-                <h3>Quiz para treinamento do Exame de Suficiência de CFC</h3>
-                <img src="https://github.com/JOTAKRATOS/MeuPortifolio3/blob/main/quiz_project_cfc_futuristic.jpeg?raw=true" alt="Imagem do Projeto 1" width="150" height="100">
-                <p>Treine e seja aprovado.</p>
-                <a href="https://jotakratos.github.io/quiz-cfc1/" target="_blank">Ver Projeto</a>
+            <div class="portfolio-container">
+                <div class="portfolio-item quiz">
+                    <h3>Quiz para treinamento do Exame de Suficiência de CFC</h3>
+                    <img src="https://github.com/JOTAKRATOS/MeuPortifolio3/blob/main/quiz_project_cfc_futuristic.jpeg?raw=true" alt="Imagem do Projeto 1" width="150" height="100">
+                    <p>Treine e seja aprovado.</p>
+                    <a href="https://jotakratos.github.io/quiz-cfc1/" target="_blank">Ver Projeto</a>
+                </div>
+                <div class="portfolio-item andamento">
+                    <h3>Projeto 2</h3>
+                    <img src="projeto2.jpg" alt="Imagem do Projeto 2">
+                    <p>Descrição do projeto 2. Em andamento.</p>
+                    <a href="https://github.com/seu-usuario/projeto2" target="_blank">Ver Projeto</a>
+                </div>
+                <!-- Adicione mais projetos conforme necessário -->
             </div>
-            <div class="portfolio-item">
-                <h3>Projeto 2</h3>
-                <img src="projeto2.jpg" alt="Imagem do Projeto 2">
-                <p>Descrição do projeto 2. Em andamento.</p>
-                <a href="https://github.com/seu-usuario/projeto2" target="_blank">Ver Projeto</a>
-            </div>
-            <!-- Adicione mais projetos conforme necessário -->
         </section>
     </div>
     <footer id="contato">
         <p>&copy; 2024 José Carlos de Jesus. Todos os direitos reservados.</p>
         <p>Email: jjpardim@gmail.com</p>
     </footer>
+
+    <script>
+        // Função para filtrar projetos com base na categoria
+        function filterProjects(category) {
+            var items = document.getElementsByClassName('portfolio-item');
+            var buttons = document.getElementsByClassName('filter-btn');
+            
+            // Remove classe "active" de todos os botões
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+
+            // Adiciona a classe "active" ao botão clicado
+            var button = event.target;
+            button.classList.add('active');
+
+            // Filtra os projetos
+            for (var i = 0; i < items.length; i++) {
+                if (category == 'all') {
+                    items[i].style.display = "block";
+                } else {
+                    if (items[i].classList.contains(category)) {
+                        items[i].style.display = "block";
+                    } else {
+                        items[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        // Exibe todos os projetos ao carregar a página
+        window.onload = function() {
+            filterProjects('all');
+        };
+    </script>
 </body>
 </html>
